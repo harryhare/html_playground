@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>webrtc案例</title>
+    <!--link rel="stylesheet" href="css/main.css"-->
+</head>
+<body>
+    <div class="container">
+        <h1>单机版视频呼叫</h1>
+        <hr>
+        <div class="video_container" align="center">
+            <video id="local_video" autoplay playsinline muted></video>
+            <video id="remote_video" autoplay></video>
+        </div>
+        <hr>
+        <div class="button_container">
+            <button id="startButton">采集视频</button>
+            <button id="callButton">呼叫</button>
+            <button id="hangupButton">关闭</button>
+        </div>
+        <!--script src="https://webrtc.github.io/adapter/adapter-latest.js"></script-->
+        <script src="main.js"></script>
+    </div>
+</body>
+</html>
