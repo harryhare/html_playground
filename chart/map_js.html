@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>cechart</title>
+<!-- 引入 ECharts 文件 -->
+    <script src="./js/echarts.js"></script>
+	<script src="./map/china.js"></script>
+     <script src="./js/jquery.min.js"></script>
+    <script type="text/javascript">
+	    $(function (){
+	    	//js方式
+	    	initchartForjs();
+	    });
+    </script>
+</head>
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width:600px;height:500px;border:1px solid #ccc;"></div>
+</body>
+<script type="text/javascript">
+//引入相应的js文件，然后就可以加载相应的地图
+function initchartForjs() {
+	// 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+   option = {
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: '{b}'
+	    },
+	    series : [
+	        {
+	            name: '中国',
+	            type: 'map',
+	            mapType: 'china',
+	            selectedMode : 'multiple',
+	            itemStyle:{
+	                normal:{label:{show:true}},
+	                emphasis:{label:{show:true}}
+	            },
+	            data:[
+	                {name:'广东',selected:true}
+	            ]
+	        }
+	    ]
+	};
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+</script>
+</html>
