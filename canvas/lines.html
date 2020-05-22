@@ -8,6 +8,7 @@
 		ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);  
 		ctx.closePath(); 
 	}
+	
 
 	function draw_rect(){
 		var c=document.getElementById("rect");
@@ -17,6 +18,7 @@
 		text_line_num.innerText=line_num_input.value;
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
+		ctx.lineWidth = 1; 
 		console.log("draw_rect");
 		//console.log(ctx.canvas);
 		//console.log(ctx.canvas.width);
@@ -47,6 +49,7 @@
 		step_text.innerText=step_input.value;
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
+		ctx.lineWidth = 1; 
 		var r = ctx.canvas.width/2;
 		var t = 2* Math.PI;
 		var n = line_num_input.value;
@@ -113,7 +116,7 @@
 	</canvas>
 	<div>
 		<span id="rect_line_num_hint" width="50">line</span>
-		<input id="rect_line_num_input" title="lines" name="lines" type="range" min=4 max=160 step=4 onmousemove="draw_rect()">
+		<input id="rect_line_num_input" title="lines" name="lines" type="range" min=4 max=160 step=4 oninput="draw_rect()">
 		<span id="rect_line_num_text"/>
 	</div>
 </div>
@@ -124,12 +127,12 @@
 	</canvas>
 	<div>
 		<span id="circle_line_num_hint" width="50">line</span>
-		<input id="circle_line_num_input" title="lines" name="lines" type="range" min=1 max=80 step=1 onmousemove="draw_circle()">
+		<input id="circle_line_num_input" title="lines" name="lines" type="range" min=1 max=80 step=1 oninput="draw_circle()">
 		<span id="circle_line_num_text"/>
 	</div>
 	<div>
 		<span id="circle_step_hint" width="50">between</span>
-		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=40 step=1 onmousemove="draw_circle()">
+		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=40 step=1 oninput="draw_circle()">
 		<span id="circle_step_text"/>
 	</div>
 </div>
