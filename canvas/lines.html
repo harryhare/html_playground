@@ -24,7 +24,7 @@
 		
 		var i=0;
 		var t=ctx.canvas.width;
-		var n=line_input.value;// how many lines for each edge
+		var n=parseInt(line_input.value);// how many lines for each edge
 		var step=t/n;
 		for(i=0;i<t;i+=step){
 			ctx.moveTo(0,i);
@@ -51,9 +51,9 @@
 		ctx.lineWidth = 1; 
 		var r = ctx.canvas.width/2;
 		var t = 2* Math.PI;
-		var n = line_input.value;
+		var n = parseInt(line_input.value);
 		var step=t/n;
-		var diff=step* (step_input.value);
+		var diff=step* parseInt(step_input.value);
 		
 		ctx.arc(r,r,r,0,2*Math.PI);
 		ctx.stroke();
@@ -100,10 +100,10 @@
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
 		var r = ctx.canvas.width/2;
-		var edge= edge_input.value;
+		var edge= parseInt(edge_input.value);
 		var points = get_node_list(edge,r);
-		var n = line_input.value; // how many lines for each edge
-		var step = step_input.value;
+		var n = parseInt(line_input.value); // how many lines for each edge
+		var step = parseInt(step_input.value);
 		/*
 		for(var i=0;i<n;i+=1){
 			var x= between(points[edge-1][0],points[0][0],i,n);
@@ -120,10 +120,8 @@
 		for(var i=0;i<n*edge;i++){
 			var p1=Math.floor(i/n);
 			var p2=Math.floor((i+step)/n)%edge;
-			console.log(p1,p2);
 			var x_begin=between(points[p1][0],points[(p1+1)%edge][0],i%n,n);
 			var y_begin=between(points[p1][1],points[(p1+1)%edge][1],i%n,n);
-			console.log(points[p2][0],points[(p2+1)%edge][0],(i+step)%n,n);
 			var x_end=between(points[p2][0],points[(p2+1)%edge][0],(i+step)%n,n);
 			var y_end=between(points[p2][1],points[(p2+1)%edge][1],(i+step)%n,n);
 			ctx.moveTo(x_begin,y_begin);
@@ -169,7 +167,7 @@
 	</div>
 	<div>
 		<span id="polygon_step_hint" width="50">step</span>
-		<input id="polygon_step_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=1 oninput="draw_polygon()">
+		<input id="polygon_step_input" title="lines" name="lines" type="range" min=0 max=100 step=1 value=0 oninput="draw_polygon()">
 		<span id="polygon_step_text"/>
 	</div>
 </div>
