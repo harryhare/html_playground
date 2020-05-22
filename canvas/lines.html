@@ -104,19 +104,7 @@
 		var points = get_node_list(edge,r);
 		var n = parseInt(line_input.value); // how many lines for each edge
 		var step = parseInt(step_input.value);
-		/*
-		for(var i=0;i<n;i+=1){
-			var x= between(points[edge-1][0],points[0][0],i,n);
-			var y= between(points[edge-1][1],points[0][1],i,n);
-			ctx.moveTo(x,y);
-			for(var j=0;j<edge;j++){
-				var k=j*step+n;
-				var x= between(points[j][0],points[(j+1)%edge][0],i,n);
-				var y= between(points[j][1],points[(j+1)%edge][1],i,n);
-				ctx.lineTo(x,y);
-			}
-		}*/
-		console.log(points);
+		
 		for(var i=0;i<n*edge;i++){
 			var p1=Math.floor(i/n);
 			var p2=Math.floor((i+step)/n)%edge;
@@ -130,10 +118,85 @@
 		ctx.stroke();
 	}
 	
+	
+	function draw_polygonx(){
+		var c=document.getElementById("polygonx");
+		var edge_input=document.getElementById("polygonx_edge_input");
+		var edge_text=document.getElementById("polygonx_edge_text");
+		var line_input=document.getElementById("polygonx_line_input");
+		var line_text=document.getElementById("polygonx_line_text");
+		var step_input=document.getElementById("polygonx_step_input");
+		var step_text=document.getElementById("polygonx_step_text");
+		
+		edge_text.innerText=edge_input.value;
+		line_text.innerText=line_input.value;
+		step_text.innerText=step_input.value;
+		
+		var ctx=c.getContext("2d");
+		clean(ctx);
+		ctx.strokeStyle = "#476b8c";
+		var r = ctx.canvas.width/2;
+		var edge= parseInt(edge_input.value);
+		var points = get_node_list(edge,r);
+		var n = parseInt(line_input.value); // how many lines for each edge
+		var step = parseInt(step_input.value);
+		
+		for(var i=0;i<n*edge;i++){
+			var p1=Math.floor(i/n);
+			var p2=Math.floor((i*step)/n)%edge;
+			var x_begin=between(points[p1][0],points[(p1+1)%edge][0],i%n,n);
+			var y_begin=between(points[p1][1],points[(p1+1)%edge][1],i%n,n);
+			var x_end=between(points[p2][0],points[(p2+1)%edge][0],(i*step)%n,n);
+			var y_end=between(points[p2][1],points[(p2+1)%edge][1],(i*step)%n,n);
+			ctx.moveTo(x_begin,y_begin);
+			ctx.lineTo(x_end,y_end);
+		}
+		ctx.stroke();
+	}
+	
+	function draw_polygon3(){
+		var c=document.getElementById("polygon3");
+		var edge_input=document.getElementById("polygon3_edge_input");
+		var edge_text=document.getElementById("polygon3_edge_text");
+		var line_input=document.getElementById("polygon3_line_input");
+		var line_text=document.getElementById("polygon3_line_text");
+		var step_input=document.getElementById("polygon3_step_input");
+		var step_text=document.getElementById("polygon3_step_text");
+		
+		edge_text.innerText=edge_input.value;
+		line_text.innerText=line_input.value;
+		step_text.innerText=step_input.value;
+		
+		var ctx=c.getContext("2d");
+		clean(ctx);
+		ctx.strokeStyle = "#476b8c";
+		var r = ctx.canvas.width/2;
+		var edge= parseInt(edge_input.value);
+		var points = get_node_list(edge,r);
+		var n = parseInt(line_input.value); // how many lines for each edge
+		var step = parseInt(step_input.value);
+		
+		for(var i=0;i<n*edge;i++){
+			var p1=Math.floor(i/n);
+			var p2=Math.floor((i*step)/n)%edge;
+			var x_begin=between(points[p1][0],points[(p1+1)%edge][0],i%n,n);
+			var y_begin=between(points[p1][1],points[(p1+1)%edge][1],i%n,n);
+			var x_end=between(points[p2][0],points[(p2+1)%edge][0],(i+step)%n,n);
+			var y_end=between(points[p2][1],points[(p2+1)%edge][1],(i+step)%n,n);
+			ctx.moveTo(x_begin,y_begin);
+			ctx.lineTo(x_end,y_end);
+		}
+		ctx.stroke();
+	}
+	
+	
+	
 	function draw_all(){
 		draw_rect();
 		draw_circle();
 		draw_polygon();
+		draw_polygonx();
+		draw_polygon3();
 		
 	}
 	window.onload=draw_all;
@@ -153,25 +216,6 @@
 	</div>
 </div>
 
-<div style="margin:50px;">
-	<canvas id="polygon" width="400" height="400" style="border:1px none #000000;"></canvas>
-		<div>
-		<span id="polygon_edge_hint" width="50">edge</span>
-		<input id="polygon_edge_input" title="lines" name="lines" type="range" min=3 max=10 step=1 value=5 oninput="draw_polygon()">
-		<span id="polygon_edge_text"/>
-	</div>
-	<div>
-		<span id="polygon_line_hint" width="50">line</span>
-		<input id="polygon_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=20 oninput="draw_polygon()">
-		<span id="polygon_line_text"/>
-	</div>
-	<div>
-		<span id="polygon_step_hint" width="50">step</span>
-		<input id="polygon_step_input" title="lines" name="lines" type="range" min=0 max=100 step=1 value=0 oninput="draw_polygon()">
-		<span id="polygon_step_text"/>
-	</div>
-</div>
-
 
 <div style="margin:50px;">
 	<canvas id="circle" width="400" height="400" style="border:1px none #000000;"></canvas>
@@ -184,6 +228,68 @@
 		<span id="circle_step_hint" width="50">step</span>
 		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=200 step=1 value=30 oninput="draw_circle()">
 		<span id="circle_step_text"/>
+	</div>
+</div>
+
+
+
+
+<div style="margin:50px;">
+	<canvas id="polygon" width="400" height="400" style="border:1px none #000000;"></canvas>
+		<div>
+		<span id="polygon_edge_hint" width="50">edge</span>
+		<input id="polygon_edge_input" title="lines" name="lines" type="range" min=3 max=10 step=1 value=5 oninput="draw_polygon()">
+		<span id="polygon_edge_text"/>
+	</div>
+	<div>
+		<span id="polygon_line_hint" width="50">line</span>
+		<input id="polygon_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=70 oninput="draw_polygon()">
+		<span id="polygon_line_text"/>
+	</div>
+	<div>
+		<span id="polygon_step_hint" width="50">step</span>
+		<input id="polygon_step_input" title="lines" name="lines" type="range" min=0 max=100 step=1 value=85 oninput="draw_polygon()">
+		<span id="polygon_step_text"/>
+	</div>
+</div>
+
+
+
+<div style="margin:50px;">
+	<canvas id="polygonx" width="400" height="400" style="border:1px none #000000;"></canvas>
+		<div>
+		<span id="polygonx_edge_hint" width="50">edge</span>
+		<input id="polygonx_edge_input" title="lines" name="lines" type="range" min=3 max=10 step=1 value=3 oninput="draw_polygonx()">
+		<span id="polygonx_edge_text"/>
+	</div>
+	<div>
+		<span id="polygonx_line_hint" width="50">line</span>
+		<input id="polygonx_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=50 oninput="draw_polygonx()">
+		<span id="polygonx_line_text"/>
+	</div>
+	<div>
+		<span id="polygonx_step_hint" width="50">step</span>
+		<input id="polygonx_step_input" title="lines" name="lines" type="range" min=0 max=100 step=1 value=2 oninput="draw_polygonx()">
+		<span id="polygonx_step_text"/>
+	</div>
+</div>
+
+<div style="margin:50px;">
+	<canvas id="polygon3" width="400" height="400" style="border:1px none #000000;"></canvas>
+		<div>
+		<span id="polygon3_edge_hint" width="50">edge</span>
+		<input id="polygon3_edge_input" title="lines" name="lines" type="range" min=3 max=10 step=1 value=5 oninput="draw_polygon3()">
+		<span id="polygon3_edge_text"/>
+	</div>
+	<div>
+		<span id="polygon3_line_hint" width="50">line</span>
+		<input id="polygon3_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=81 oninput="draw_polygon3()">
+		<span id="polygon3_line_text"/>
+	</div>
+	<div>
+		<span id="polygon3_step_hint" width="50">step</span>
+		<input id="polygon3_step_input" title="lines" name="lines" type="range" min=0 max=100 step=1 value=64 oninput="draw_polygon3()">
+		<span id="polygon3_step_text"/>
 	</div>
 </div>
 
