@@ -12,21 +12,19 @@
 
 	function draw_rect(){
 		var c=document.getElementById("rect");
-		var line_num_input=document.getElementById("rect_line_num_input");
-		var text_line_num=document.getElementById("rect_line_num_text");
+		var line_input=document.getElementById("rect_line_input");
+		var line_text=document.getElementById("rect_line_text");
+		line_text.innerText=line_input.value;
+		
 		var ctx=c.getContext("2d");
-		text_line_num.innerText=line_num_input.value;
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
 		ctx.lineWidth = 1; 
 		console.log("draw_rect");
-		//console.log(ctx.canvas);
-		//console.log(ctx.canvas.width);
-		//console.log(ctx.canvas.height);
-		//console.log(line_num_input.value);
+		
 		var i=0;
 		var t=ctx.canvas.width;
-		var n=line_num_input.value/4;
+		var n=line_input.value;// how many lines for each edge
 		var step=t/n;
 		for(i=0;i<t;i+=step){
 			ctx.moveTo(0,i);
@@ -34,30 +32,32 @@
 			ctx.lineTo(t,t-i);
 			ctx.lineTo(t-i,0);
 			ctx.lineTo(0,i);
-			ctx.stroke();
 		}
+		ctx.stroke();
 	}
 	
 	function draw_circle(){
 		var c=document.getElementById("circle");
-		var line_num_input=document.getElementById("circle_line_num_input");
-		var line_num_text=document.getElementById("circle_line_num_text");
+		var line_input=document.getElementById("circle_line_input");
+		var line_text=document.getElementById("circle_line_text");
 		var step_input=document.getElementById("circle_step_input");
 		var step_text=document.getElementById("circle_step_text");
-		var ctx=c.getContext("2d");
-		line_num_text.innerText=line_num_input.value;
+		line_text.innerText=line_input.value;
 		step_text.innerText=step_input.value;
+		
+		var ctx=c.getContext("2d");
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
 		ctx.lineWidth = 1; 
 		var r = ctx.canvas.width/2;
 		var t = 2* Math.PI;
-		var n = line_num_input.value;
+		var n = line_input.value;
 		var step=t/n;
 		var diff=step* (step_input.value);
 		
 		ctx.arc(r,r,r,0,2*Math.PI);
 		ctx.stroke();
+		
 		for(var i=0;i<t;i+=step){
 			var x_begin=(Math.sin(i)+1)*r;
 			var y_begin=(Math.cos(i)+1)*r;
@@ -66,34 +66,70 @@
 			
 			ctx.moveTo(x_begin,y_begin);
 			ctx.lineTo(x_end,y_end);
-			ctx.stroke();
 		}
-
+		ctx.stroke();
 	}
+	
+	function get_node_list(n,r){
+		var points=new Array(n);
+		for(var i=0;i<n;i++){
+			var x= (Math.sin(2*Math.PI*i/n)+1)*r;
+			var y= (Math.cos(2*Math.PI*i/n)+1)*r;
+			points[i]=[x,y];
+		}
+		return points;
+	}
+	function between(p1,p2,i,n){
+		return p1*(i/n)+p2*(1-i/n);
+	}
+	
 	function draw_polygon(){
-/*		var c=document.getElementById("circle");
+		var c=document.getElementById("polygon");
+		var edge_input=document.getElementById("polygon_edge_input");
+		var edge_text=document.getElementById("polygon_edge_text");
+		var line_input=document.getElementById("polygon_line_input");
+		var line_text=document.getElementById("polygon_line_text");
+		var step_input=document.getElementById("polygon_step_input");
+		var step_text=document.getElementById("polygon_step_text");
+		
+		edge_text.innerText=edge_input.value;
+		line_text.innerText=line_input.value;
+		step_text.innerText=step_input.value;
+		
 		var ctx=c.getContext("2d");
 		clean(ctx);
 		ctx.strokeStyle = "#476b8c";
 		var r = ctx.canvas.width/2;
-		var t = 2* Math.PI;
-		var n = 40;
-		var step=t/n;
-		var diff=step* 10;
-		
-		ctx.arc(r,r,r,0,2*Math.PI);
-		ctx.stroke();
-		for(var i=0;i<t;i+=step){
-			var x_begin=(Math.sin(i)+1)*r;
-			var y_begin=(Math.cos(i)+1)*r;
-			var x_end=(Math.sin(i+diff)+1)*r;
-			var y_end=(Math.cos(i+diff)+1)*r;
-			
+		var edge= edge_input.value;
+		var points = get_node_list(edge,r);
+		var n = line_input.value; // how many lines for each edge
+		var step = step_input.value;
+		/*
+		for(var i=0;i<n;i+=1){
+			var x= between(points[edge-1][0],points[0][0],i,n);
+			var y= between(points[edge-1][1],points[0][1],i,n);
+			ctx.moveTo(x,y);
+			for(var j=0;j<edge;j++){
+				var k=j*step+n;
+				var x= between(points[j][0],points[(j+1)%edge][0],i,n);
+				var y= between(points[j][1],points[(j+1)%edge][1],i,n);
+				ctx.lineTo(x,y);
+			}
+		}*/
+		console.log(points);
+		for(var i=0;i<n*edge;i++){
+			var p1=Math.floor(i/n);
+			var p2=Math.floor((i+step)/n)%edge;
+			console.log(p1,p2);
+			var x_begin=between(points[p1][0],points[(p1+1)%edge][0],i%n,n);
+			var y_begin=between(points[p1][1],points[(p1+1)%edge][1],i%n,n);
+			console.log(points[p2][0],points[(p2+1)%edge][0],(i+step)%n,n);
+			var x_end=between(points[p2][0],points[(p2+1)%edge][0],(i+step)%n,n);
+			var y_end=between(points[p2][1],points[(p2+1)%edge][1],(i+step)%n,n);
 			ctx.moveTo(x_begin,y_begin);
 			ctx.lineTo(x_end,y_end);
-			ctx.stroke();
 		}
-*/
+		ctx.stroke();
 	}
 	
 	function draw_all(){
@@ -111,36 +147,46 @@
 <body>
 
 <div style="margin:50px;">
-	<canvas id="rect" width="400" height="400"
-	style="border:1px none #000000;">
-	</canvas>
+	<canvas id="rect" width="400" height="400"style="border:1px none #000000;"></canvas>
 	<div>
-		<span id="rect_line_num_hint" width="50">line</span>
-		<input id="rect_line_num_input" title="lines" name="lines" type="range" min=4 max=160 step=4 oninput="draw_rect()">
-		<span id="rect_line_num_text"/>
+		<span id="rect_line_hint" width="50">line</span>
+		<input id="rect_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=40 oninput="draw_rect()">
+		<span id="rect_line_text"/>
 	</div>
 </div>
 
 <div style="margin:50px;">
-	<canvas id="circle" width="400" height="400"
-	style="border:1px none #000000;">
-	</canvas>
-	<div>
-		<span id="circle_line_num_hint" width="50">line</span>
-		<input id="circle_line_num_input" title="lines" name="lines" type="range" min=1 max=80 step=1 oninput="draw_circle()">
-		<span id="circle_line_num_text"/>
+	<canvas id="polygon" width="400" height="400" style="border:1px none #000000;"></canvas>
+		<div>
+		<span id="polygon_edge_hint" width="50">edge</span>
+		<input id="polygon_edge_input" title="lines" name="lines" type="range" min=3 max=10 step=1 value=5 oninput="draw_polygon()">
+		<span id="polygon_edge_text"/>
 	</div>
 	<div>
-		<span id="circle_step_hint" width="50">between</span>
-		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=40 step=1 oninput="draw_circle()">
+		<span id="polygon_line_hint" width="50">line</span>
+		<input id="polygon_line_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=20 oninput="draw_polygon()">
+		<span id="polygon_line_text"/>
+	</div>
+	<div>
+		<span id="polygon_step_hint" width="50">step</span>
+		<input id="polygon_step_input" title="lines" name="lines" type="range" min=1 max=100 step=1 value=1 oninput="draw_polygon()">
+		<span id="polygon_step_text"/>
+	</div>
+</div>
+
+
+<div style="margin:50px;">
+	<canvas id="circle" width="400" height="400" style="border:1px none #000000;"></canvas>
+	<div>
+		<span id="circle_line_hint" width="50">line</span>
+		<input id="circle_line_input" title="lines" name="lines" type="range" min=1 max=200 step=1 value=100 oninput="draw_circle()">
+		<span id="circle_line_text"/>
+	</div>
+	<div>
+		<span id="circle_step_hint" width="50">step</span>
+		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=200 step=1 value=30 oninput="draw_circle()">
 		<span id="circle_step_text"/>
 	</div>
-</div>
-
-<div style="margin:50px;">
-	<canvas id="polygon" width="400" height="400"
-	style="border:1px none #000000;">
-	</canvas>
 </div>
 
 
