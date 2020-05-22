@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<script>
+	function clean(ctx){
+	    ctx.fillStyle="#ffffff";  
+		ctx.beginPath();  
+		ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);  
+		ctx.closePath(); 
+	}
+
+	function draw_rect(){
+		var c=document.getElementById("rect");
+		var line_num_input=document.getElementById("rect_line_num_input");
+		var text_line_num=document.getElementById("rect_line_num_text");
+		var ctx=c.getContext("2d");
+		text_line_num.innerText=line_num_input.value;
+		clean(ctx);
+		ctx.strokeStyle = "#476b8c";
+		console.log("draw_rect");
+		//console.log(ctx.canvas);
+		//console.log(ctx.canvas.width);
+		//console.log(ctx.canvas.height);
+		//console.log(line_num_input.value);
+		var i=0;
+		var t=ctx.canvas.width;
+		var n=line_num_input.value/4;
+		var step=t/n;
+		for(i=0;i<t;i+=step){
+			ctx.moveTo(0,i);
+			ctx.lineTo(i,t);
+			ctx.lineTo(t,t-i);
+			ctx.lineTo(t-i,0);
+			ctx.lineTo(0,i);
+			ctx.stroke();
+		}
+	}
+	
+	function draw_circle(){
+		var c=document.getElementById("circle");
+		var line_num_input=document.getElementById("circle_line_num_input");
+		var line_num_text=document.getElementById("circle_line_num_text");
+		var step_input=document.getElementById("circle_step_input");
+		var step_text=document.getElementById("circle_step_text");
+		var ctx=c.getContext("2d");
+		line_num_text.innerText=line_num_input.value;
+		step_text.innerText=step_input.value;
+		clean(ctx);
+		ctx.strokeStyle = "#476b8c";
+		var r = ctx.canvas.width/2;
+		var t = 2* Math.PI;
+		var n = line_num_input.value;
+		var step=t/n;
+		var diff=step* (step_input.value);
+		
+		ctx.arc(r,r,r,0,2*Math.PI);
+		ctx.stroke();
+		for(var i=0;i<t;i+=step){
+			var x_begin=(Math.sin(i)+1)*r;
+			var y_begin=(Math.cos(i)+1)*r;
+			var x_end=(Math.sin(i+diff)+1)*r;
+			var y_end=(Math.cos(i+diff)+1)*r;
+			
+			ctx.moveTo(x_begin,y_begin);
+			ctx.lineTo(x_end,y_end);
+			ctx.stroke();
+		}
+
+	}
+	function draw_polygon(){
+/*		var c=document.getElementById("circle");
+		var ctx=c.getContext("2d");
+		clean(ctx);
+		ctx.strokeStyle = "#476b8c";
+		var r = ctx.canvas.width/2;
+		var t = 2* Math.PI;
+		var n = 40;
+		var step=t/n;
+		var diff=step* 10;
+		
+		ctx.arc(r,r,r,0,2*Math.PI);
+		ctx.stroke();
+		for(var i=0;i<t;i+=step){
+			var x_begin=(Math.sin(i)+1)*r;
+			var y_begin=(Math.cos(i)+1)*r;
+			var x_end=(Math.sin(i+diff)+1)*r;
+			var y_end=(Math.cos(i+diff)+1)*r;
+			
+			ctx.moveTo(x_begin,y_begin);
+			ctx.lineTo(x_end,y_end);
+			ctx.stroke();
+		}
+*/
+	}
+	
+	function draw_all(){
+		draw_rect();
+		draw_circle();
+		draw_polygon();
+		
+	}
+	window.onload=draw_all;
+</script>
+
+
+</head>
+
+<body>
+
+<div style="margin:50px;">
+	<canvas id="rect" width="400" height="400"
+	style="border:1px none #000000;">
+	</canvas>
+	<div>
+		<span id="rect_line_num_hint" width="50">line</span>
+		<input id="rect_line_num_input" title="lines" name="lines" type="range" min=4 max=160 step=4 onmousemove="draw_rect()">
+		<span id="rect_line_num_text"/>
+	</div>
+</div>
+
+<div style="margin:50px;">
+	<canvas id="circle" width="400" height="400"
+	style="border:1px none #000000;">
+	</canvas>>
+	<div>
+		<span id="circle_line_num_hint" width="50">line</span>
+		<input id="circle_line_num_input" title="lines" name="lines" type="range" min=1 max=80 step=1 onmousemove="draw_circle()">
+		<span id="circle_line_num_text"/>
+	</div>
+	<div>
+		<span id="circle_step_hint" width="50">between</span>
+		<input id="circle_step_input" title="lines" name="lines" type="range" min=1 max=40 step=1 onmousemove="draw_circle()">
+		<span id="circle_step_text"/>
+	</div>
+</div>
+
+<div style="margin:50px;">
+	<canvas id="polygon" width="400" height="400"
+	style="border:1px none #000000;">
+	</canvas>
+</div>
+
+
+
+
+</body>
+</html>
