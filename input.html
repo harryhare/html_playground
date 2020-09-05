@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+
+    </head>
+    <body>
+  
+        <!-- defines a form for user input -->
+        <form action="/somewhere" method="post">
+            <!-- creates a simple single line input -->
+            <div>
+                what is your name?
+                <input type="text" />
+            </div>
+
+            <!-- creates a radio selection style input -->
+            <div>
+                are you male or female?
+                <input type="radio" name="gender" /> male
+                <input type="radio" name="gender" /> female
+            </div>
+
+            <!-- creates a dropdown style input -->
+            <div>
+                favorite dog
+                <select>
+                    <option value=""></option>
+                    <option value="chase">chase</option>
+                </select>
+            </div>
+
+            <!-- creates a multiline input -->
+            <div>
+                send chase a nice message
+                <br />
+                <textarea></textarea>
+            </div>
+
+            <!-- creates a checkbox type input -->
+            <div>
+                check to confirm you love chase
+                <input type="checkbox" />
+            </div>
+
+            <button type="submit">send data</button>
+        </form>
+    </body>
+</html>
