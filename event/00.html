@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <style type="text/css">
+        .outer {
+            background-color: #003333;
+            padding: 20px 20px 20px 20px;
+            margin-bottom: 20px;
+        }
+
+        .middle {
+
+            background-color: #00aaaa;
+            padding: 20px 20px 20px 20px;
+        }
+
+        .inner {
+            background-color: #00eeee;
+            padding: 20px 20px 20px 20px;
+            width:100px;
+            height: 100px;
+        }
+    </style>
+    <script>
+        var i=1;
+        function onOuterClick(e) {
+            console.log("outer click:",i);
+            i++;
+        }
+
+        function onMiddleClick(e) {
+            console.log("middle click:",i);
+        }
+
+        function onInnerClick(e) {
+            console.log("inner click:",i);
+        }
+        function onOuterClick1(e) {
+            console.log("outer click:",i);
+            i++;
+        }
+
+        function onMiddleClick1(e) {
+            console.log("middle click:",i);
+            event.preventDefault();
+        }
+
+        function onInnerClick1(e) {
+            console.log("inner click:",i);
+
+        }
+
+        function onOuterClick2(e) {
+            console.log("outer click:",i);
+            i++;
+        }
+
+        function onMiddleClick2(e) {
+            console.log("middle click:",i);
+            event.stopPropagation();
+        }
+
+        function onInnerClick2(e) {
+            console.log("inner click:",i);
+
+        }
+
+        function onOuterClick3(e) {
+            console.log("outer click:",i);
+            i++;
+        }
+        function onMiddleClick3(e) {
+            console.log("middle click:",i);
+            event.stopPropagation();
+        }
+
+        function onMiddleClick3_second(e) {
+            console.log("middle click:","second");
+            event.stopImmediatePropagation();
+        }
+        function onMiddleClick3_third(e) {
+            console.log("middle click:","third");
+        }
+
+        function onInnerClick3(e) {
+            console.log("inner click:",i);
+
+        }
+    </script>
+</head>
+<body>
+<div class="outer" onclick="onOuterClick()">
+    <div class="middle" onclick="onMiddleClick()">
+        <div class="inner" onclick="onInnerClick()">
+            <p> simple <p>
+        </div>
+    </div>
+</div>
+
+<div class="outer" onclick="onOuterClick1()">
+    <div class="middle" onclick="onMiddleClick1()">
+        <div class="inner" onclick="onInnerClick1()">
+            <p>preventDefault </p>
+        </div>
+    </div>
+</div>
+
+<div class="outer" onclick="onOuterClick2()">
+    <div class="middle" onclick="onMiddleClick2()">
+        <div class="inner" onclick="onInnerClick2()">
+            <p>stopPropagation</p>
+        </div>
+    </div>
+</div>
+
+<div class="outer" onclick="onOuterClick3()">
+    <div class="middle" id="test" onclick="onMiddleClick3()">
+        <div class="inner" onclick="onInnerClick3()">
+            <p> stopImmediatePropagation </p>
+        </div>
+    </div>
+</div>
+<script>
+    t=document.querySelector("#test");
+    t.addEventListener("click",onMiddleClick3_second);
+    t.addEventListener("click",onMiddleClick3_third);
+</script>
+</body>
+</html>
