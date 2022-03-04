@@ -1,0 +1,47 @@
+<html>
+
+<head>
+
+
+</head>
+
+<body>
+
+
+<canvas id="myCanvas" width="1000" height="800"
+        style="border:1px solid #000000;">
+</canvas>
+<script>
+    var context = document.getElementById("myCanvas").getContext('2d');
+    context.strokeStyle = "#005588";
+    context.fillStyle = "#005588";
+
+    context.beginPath();
+    for (var i = 0; i < 10; i++) {
+        context.moveTo(50 + i * 100 + 40, 60);
+        context.arc(50 + i * 100, 60, 40, 0, 2 * Math.PI * (i + 1) / 10);
+    }
+    context.stroke();
+
+    context.beginPath();
+    for (var i = 0; i < 10; i++) {
+        context.moveTo(50 + i * 100 + 40, 160);
+        context.arc(50 + i * 100, 160, 40, 0, 2 * Math.PI * (i + 1) / 10);
+        context.closePath();
+    }
+    context.stroke();// 到上一个begin path
+
+    //var context = document.getElementById("myCanvas").getContext('2d');
+
+    context.beginPath();
+    for (var i = 0; i < 10; i++) {
+        context.moveTo(50 + i * 100 + 40, 260);
+        context.arc(50 + i * 100, 260, 40, 0, 2 * Math.PI * (i + 1) / 10);
+        //context.closePath();
+    }
+    context.fill();// 到上一个begin path
+</script>
+
+</body>
+</html>
+

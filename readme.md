@@ -3,7 +3,10 @@
 ## JavaScript
 
 * <script src=""></script> 不能写成 <script src=""/>
-
+* preventdefault 除了有默认事件比如submit 之外的组件没啥用
+  stopPropagation 停止向上传递事件
+  stopImmediatePropagation 停止向上传递事件，并且停止处理这个事件的其他listener
+ 
 
 ## CSS
 
