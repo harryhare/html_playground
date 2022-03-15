@@ -143,5 +143,22 @@ http://caibaojian.com/js-download.html
 ```
 
 
+## 时间相关
+now=new Date()
+t=new Date(timestamp)
+
+setDay 一周的第几天
+setDate 一个月的第几天
+
+
+## 字符串
+
+* 去掉两侧空格
+没有strip(), 用trim()
+
+* 没有printf 那种格式化输出的函数
+
+
+##
 
 
