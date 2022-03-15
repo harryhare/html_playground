@@ -131,4 +131,17 @@ sleep(2000).then(() => { console.log("World!"); });
   ```
 剪切板消毒的插件主要是前三种
 
+## 创建文件并下载
+http://caibaojian.com/js-download.html
+例子见 donwload.html
+```js
+    let a = document.querySelector("a");
+    let blob = new Blob(['test']);
+    a.download = "leaderboard.csv";
+    a.href = URL.createObjectURL(blob);
+    //URL.revokeObjectURL(a.href)
+```
+
+
+
 
