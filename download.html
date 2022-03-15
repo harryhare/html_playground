@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div>First div</div>
+
+
+<a>download</a>
+
+<script>
+    let a = document.querySelector("a");
+    let blob = new Blob(['test']);
+    a.download = "leaderboard.csv";
+    a.href = URL.createObjectURL(blob);
+    //URL.revokeObjectURL(a.href)
+</script>
+</body>
+</html>
